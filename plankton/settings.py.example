@@ -1,0 +1,2 @@
+WKHTMLTOPDF_CMD = 'wkhtmltopdf'
+WKHTMLTOPDF_DEFAULT_OPTIONS = {'quiet': True}

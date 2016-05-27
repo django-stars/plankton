@@ -1,0 +1,2 @@
+WKHTMLTOPDF_CMD = 'xvfb-run wkhtmltopdf'
+WKHTMLTOPDF_DEFAULT_OPTIONS = {'quiet': True}

@@ -1,5 +1,6 @@
 from cerberus.cerberus import Validator
 
+
 options_schema = {
     # Page options
     'javascript-delay': {'type': 'integer'},

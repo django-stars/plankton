@@ -14,5 +14,5 @@ RUN cp /home/app/plankton/settings.py.docker.example /home/app/plankton/settings
 
 RUN pip3 install -r /home/app/plankton/requirements.txt
 EXPOSE 8080
-E`NTRYPOINT ["python3", "/home/app/plankton/plankton_server.py"]
+ENTRYPOINT ["python3", "/home/app/plankton/plankton_server.py"]
 

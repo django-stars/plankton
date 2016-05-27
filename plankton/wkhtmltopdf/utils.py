@@ -19,18 +19,12 @@ async def exec_wkhtmltopdf(data):
     # Output to STDOUT
     command_args.extend([data['page'], '-'])
 
-
-    print(command_args)
-
     command_out = await _get_lines(' '.join(command_args))
-
 
     if b'%PDF-' in command_out:
         debug_info, pdf_content = command_out.split(b'%PDF-', 1)
     else:
         raise Exception('{}\n{}'.format(command_args, command_out))
-
-
 
     pdf_content = b'%PDF-' + pdf_content
 

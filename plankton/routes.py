@@ -1,6 +1,7 @@
-from wkhtmltopdf.views import HtmlToPdfView
+from wkhtmltopdf.views import HtmlToPdfView, alive
 
 
 routes = (
+    ('GET', '/', alive),
     ('POST', '/html-to-pdf/', HtmlToPdfView),
 )

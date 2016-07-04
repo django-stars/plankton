@@ -1,5 +1,7 @@
-from cerberus.cerberus import Validator
+from copy import copy
 
+import validators
+from cerberus.cerberus import Validator
 
 options_schema = {
     # Page options
@@ -29,10 +31,22 @@ options_schema = {
 }
 
 
-def get_validator():
-    return Validator(
+class WkhtmlToPdfParamsValidator(object):
+    def __init__(self):
+        self.validator = Validator(
         schema={
             'page': {'type': 'string', 'required': True},
             'options': {'type': 'dict', 'schema': options_schema}
         }
-    )
+        )
+        self.errors = {}
+
+    def validate(self, data):
+        self.validator.validate(data)
+        self.errors = copy(self.validator.errors)
+
+        if not self.errors:
+            if not validators.url(data['page']):
+                self.errors['page'] = "Please specify correct url"
+
+        return not bool(self.errors)

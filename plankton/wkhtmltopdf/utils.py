@@ -11,6 +11,10 @@ import logging
 logger = logging.getLogger('plankton.wkhtmltopdf.utils.exec_wkhtmltopdf')
 
 
+class WkhtmlToPdfFailure(Exception):
+    pass
+
+
 async def exec_wkhtmltopdf(data):
     # Prepare inline options parameters for command
 
@@ -19,12 +23,18 @@ async def exec_wkhtmltopdf(data):
     # Output to STDOUT
     command_args.extend([data['page'], '-'])
 
-    command_out = await _get_lines(' '.join(command_args))
+    proc = await asyncio.create_subprocess_shell(
+        ' '.join(command_args),
+        stdin=PIPE, stdout=PIPE, stderr=STDOUT
+    )
+
+    command_out, errs = await proc.communicate()
 
     if b'%PDF-' in command_out:
         debug_info, pdf_content = command_out.split(b'%PDF-', 1)
     else:
-        raise Exception('{}\n{}'.format(command_args, command_out))
+        error_msg = command_out.decode('utf-8').replace('\n', ' ')
+        raise WkhtmlToPdfFailure(error_msg)
 
     pdf_content = b'%PDF-' + pdf_content
 
@@ -52,13 +62,3 @@ def _options_to_args(options):
 
     return flags
 
-
-async def _get_lines(shell_command):
-    proc = await asyncio.create_subprocess_shell(
-        shell_command,
-        stdin=PIPE, stdout=PIPE, stderr=STDOUT
-    )
-
-    out, errs = await proc.communicate()
-
-    return out

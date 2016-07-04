@@ -1,3 +1,4 @@
 aiohttp
 cerberus
 validators
+requests

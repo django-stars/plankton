@@ -7,10 +7,9 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y python3 python3-pip wkhtmltopdf xvfb
 
-COPY plankton /home/app/plankton
-COPY requirements.txt /home/app/plankton/requirements.txt
-
-RUN pip3 install -r /home/app/plankton/requirements.txt
+COPY . /home/app/plankton
+RUN cd /home/app/plankton/ && python3 setup.py install
 EXPOSE 8080
-ENTRYPOINT python3 /home/app/plankton/plankton_server.py --port 8080 --wkhtmltopdf_command "xvfb-run -a wkhtmltopdf"
+
+ENTRYPOINT plankton-server --port 8080 --wkhtmltopdf_command "xvfb-run -a wkhtmltopdf"
 

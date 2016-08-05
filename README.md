@@ -17,10 +17,12 @@ Then if you want to run in docker container:
 
 Or do it in classic way
 
-1. ```pip install -r requirements.txt``` 
+1. ```python setup.py install``` 
 2. download and install wkhtmltopdf http://wkhtmltopdf.org/downloads.html.
-3. ```cp plankton/settings.py.example plankton/settings.py```
-4. ```python plankton/plankton_server.py``` 
+3. Run server```plankton-server``` 
+
+You can specify wkhtmltopdf command and port:
+```plankton-server --wkhtmltopdf_command '/usr/local/bin/wkhtmltopdf' --port 9000```
 
 
 ## Usage
@@ -35,10 +37,10 @@ DATA ```{"page": "http://google.com.ua", "options": {"javascript-delay": 2000, "
 
 
 ## TODO
-Prodject currently under developing and there are lot of things to do:
+Project currently under developing and there are lot of things to do:
 
-1. Test coverage
-2. wkhtmltopdf errors handling
+1. debug mode
+2. HTTP OPTIONS
 3. logging
 4. security
 5. ...

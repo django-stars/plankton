@@ -1,4 +1,4 @@
-from app import init_app
+from plankton.app import init_app
 
 
 if __name__ == '__main__':

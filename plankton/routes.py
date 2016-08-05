@@ -1,4 +1,4 @@
-from wkhtmltopdf.views import HtmlToPdfView, alive
+from plankton.wkhtmltopdf.views import HtmlToPdfView, alive
 
 
 routes = (

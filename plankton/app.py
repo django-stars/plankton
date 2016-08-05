@@ -1,7 +1,7 @@
-from aiohttp import web
-from routes import routes
 import argparse
-import settings
+from aiohttp import web
+from plankton.routes import routes
+import plankton.settings
 
 
 def init_app():
@@ -14,7 +14,7 @@ def init_app():
     args = parser.parse_args()
 
     if args.wkhtmltopdf_command:
-        settings.WKHTMLTOPDF_CMD = args.wkhtmltopdf_command
+        plankton.settings.WKHTMLTOPDF_CMD = args.wkhtmltopdf_command
 
     app = web.Application()
     for route in routes:

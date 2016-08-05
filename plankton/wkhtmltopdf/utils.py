@@ -15,13 +15,30 @@ class WkhtmlToPdfFailure(Exception):
     pass
 
 
+def wkhtmltopdf_args_mapping(data):
+    """
+    fix our names to wkhtmltopdf's args
+    """
+    mapping = {
+        'cookies': 'cookie',
+        'custom-headers': 'custom-header',
+        'run-scripts': 'run-script'
+    }
+
+    return {mapping.get(k, k): v for k, v in data.items()}
+
+
 async def exec_wkhtmltopdf(data):
+    data = wkhtmltopdf_args_mapping(data)
+    # security things
+    data['disable-local-file-access'] = True
+
     # Prepare inline options parameters for command
 
     command_args = [settings.WKHTMLTOPDF_CMD]
     command_args.extend(_options_to_args(data.get('options', settings.WKHTMLTOPDF_DEFAULT_OPTIONS)))
     # Output to STDOUT
-    command_args.extend([data['page'], '-'])
+    command_args.extend([shlex.quote(data['page']), '-'])
 
     proc = await asyncio.create_subprocess_shell(
         ' '.join(command_args),

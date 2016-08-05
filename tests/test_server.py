@@ -59,6 +59,39 @@ class PlanktonAPITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.content, BROKEN_SITE_ERROR)
 
+    def test_do_not_execute_shell_command(self):
+        injection = '#;cat tests/injection_text.txt;'
+
+        data = {
+            'page': SITE_URL + injection
+        }
+
+        response = requests.post(self.api_url('/html-to-pdf/'), json=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(b'was injected', response.content)
+
+        data = {
+            'page': SITE_URL,
+            'options': {
+                'title': "title '{}".format(injection),
+            }
+        }
+
+        response = requests.post(self.api_url('/html-to-pdf/'), json=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(b'was injected', response.content)
+
+        data = {
+            'page': SITE_URL,
+            'options': {
+                'title': 'title "{}'.format(injection),
+            }
+        }
+
+        response = requests.post(self.api_url('/html-to-pdf/'), json=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(b'was injected', response.content)
+
 
 if __name__ == '__main__':
 

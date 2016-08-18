@@ -5,7 +5,7 @@ import shlex
 from asyncio.subprocess import PIPE, STDOUT
 
 
-import settings
+from plankton import settings
 import logging
 
 logger = logging.getLogger('plankton.wkhtmltopdf.utils.exec_wkhtmltopdf')
@@ -78,4 +78,3 @@ def _options_to_args(options):
                 flags.append(shlex.quote(v))
 
     return flags
-

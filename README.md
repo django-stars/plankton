@@ -7,13 +7,13 @@ Enspired by:
 https://github.com/openlabs/docker-wkhtmltopdf and https://github.com/incuna/django-wkhtmltopdf.
 
 ## Installation
+```pip install plankton```
+
+If you want to run in docker container:
 1. Clone repo ```git clone git@github.com:django-stars/plankton.git```
 2. ```cd plankton```
-
-Then if you want to run in docker container:
-
-1. Build docker image ```docker build -t plankton .```
-2. Run container  ```docker run -p 9003:8080  plankton```.
+3. Build docker image ```docker build -t plankton .```
+4. Run container  ```docker run -p 9003:8080  plankton```.
 
 Or do it in classic way
 

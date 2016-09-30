@@ -12,6 +12,7 @@ https://github.com/openlabs/docker-wkhtmltopdf and https://github.com/incuna/dja
 3. Run server```plankton-server``` 
 
 If you want to run in docker container:
+
 1. Clone repo ```git clone git@github.com:django-stars/plankton.git```
 2. ```cd plankton```
 3. Build docker image ```docker build -t plankton .```
